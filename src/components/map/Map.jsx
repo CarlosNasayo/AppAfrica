@@ -17,17 +17,17 @@ function Map(){
       }
     });
   }, []);
- /*  useEffect(() => {
-    Papa.parse('https://raw.githubusercontent.com/CarlosNasayo/AppAfrica/main/src/data/malawii.csv', {
+  useEffect(() => {
+    Papa.parse('https://raw.githubusercontent.com/CarlosNasayo/AppAfrica/main/src/data/zambia.csv', {
       download: true,
       header: true,
       complete: function(results) {
-        setMalawi(results.data);
+        setZambia(results.data);
       }
     });
-  }, []); */
+  }, []);
 console.log(malawi)
-
+console.log(zambia)
     return (
       <MapContainer
         id="mapid"
@@ -57,6 +57,17 @@ console.log(malawi)
                         </Tooltip>
           </Marker>
         ))}
+        {/* {zambia.map((dat,index) => (
+          <Marker position={[dat.latitude,dat.longitude]}>
+            <Tooltip direction="top" offset={[0, -30]}>
+                          Name: {dat.name} <br />
+                          Ohers: {dat.others}<br />
+                          
+                          <br />
+                         
+                        </Tooltip>
+          </Marker>
+        ))} */}
         <Marker position={[-16.0308, 35.5059]} />
         <LayersControl position="topright" className="mt-5">
           <LayersControl.BaseLayer checked name="Normal">
