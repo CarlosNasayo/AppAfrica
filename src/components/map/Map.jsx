@@ -7,6 +7,12 @@ import Papa from 'papaparse';
 function Map(){
     const [malawi, setMalawi] = useState([]);
     const [zambia, setZambia] = useState([]);
+    const [tanzania, setTanania] = useState([]);
+    const [checkZambia, setCheckZambia] = useState(false);
+    const [checkTanzania, setCheckTanzania] = useState(false);
+    const [checkMalawi, setCheckMalawi] = useState(false);
+
+  
 
   useEffect(() => {
     Papa.parse('https://raw.githubusercontent.com/CarlosNasayo/AppAfrica/main/src/data/malawii.csv', {
@@ -45,7 +51,10 @@ console.log(zambia)
           position: "fixed",
         }}
         zoomControl={false}
+        
       >
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
         {malawi.map((dat,index) => (
           <Marker position={[dat.latitude,dat.longitude]}>
             <Tooltip direction="top" offset={[0, -30]}>
@@ -57,7 +66,7 @@ console.log(zambia)
                         </Tooltip>
           </Marker>
         ))}
-        {/* {zambia.map((dat,index) => (
+        {zambia.map((dat,index) => (
           <Marker position={[dat.latitude,dat.longitude]}>
             <Tooltip direction="top" offset={[0, -30]}>
                           Name: {dat.name} <br />
@@ -67,41 +76,61 @@ console.log(zambia)
                          
                         </Tooltip>
           </Marker>
-        ))} */}
+        ))}
         <Marker position={[-16.0308, 35.5059]} />
         <LayersControl position="topright" className="mt-5">
-          <LayersControl.BaseLayer checked name="Normal">
-            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          </LayersControl.BaseLayer>
-          <LayersControl.BaseLayer name="Relief">
-            <TileLayer url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png" />
-          </LayersControl.BaseLayer>
-          <LayersControl.BaseLayer name="Satellite">
-            <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
-          </LayersControl.BaseLayer>
-
-          {/*  <LayersControl.Overlay name="Aceesions" 
+         
+        <LayersControl.Overlay name="Zambia" 
           >
-            <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" 
+            <TileLayer url="" 
+             eventHandlers={{
+              add: (e) => {
+                console.log("Added Layer:", e.target);
+                console.log('added zambia')
+                },
+              remove: (e) => {
+                console.log("Removed layer:", e.target);
+                console.log('removed zambia')
+
+              }
+            }}
             />
           </LayersControl.Overlay>
-          <LayersControl.Overlay name="Gap">
-            <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+
+           <LayersControl.Overlay name="Tanzania" 
+          >
+            <TileLayer url="" 
+             eventHandlers={{
+              add: (e) => {
+                console.log("Added Layer:", e.target);
+                console.log('added tanzania')
+                },
+              remove: (e) => {
+                console.log("Removed layer:", e.target);
+                console.log('removed tanzania')
+
+              }
+            }}
+            />
+          </LayersControl.Overlay>
+          <LayersControl.Overlay name="Malawi">
+            <TileLayer url=""
             eventHandlers={{
               add: (e) => {
                 console.log("Added Layer:", e.target);
-                setPruebita(true)
-              },
+                console.log('added malawi')
+                },
               remove: (e) => {
                 console.log("Removed layer:", e.target);
-                setPruebita(false)
+                console.log('removed malawi')
+
               }
             }} />
 
-          </LayersControl.Overlay> */}
+          </LayersControl.Overlay>
         </LayersControl>
         //{" "}
-        {/* <ImageOverlay zIndex={1000} url={imageUrl} bounds={imageBounds} /> */}
+        
       </MapContainer>
     );
 }
