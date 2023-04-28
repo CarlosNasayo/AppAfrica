@@ -1,22 +1,32 @@
-import { MapContainer, TileLayer, useMap, Marker, Popup, LayersControl} from 'react-leaflet'
+import { MapContainer, TileLayer, useMap, Marker, Popup, LayersControl,Tooltip} from 'react-leaflet'
 import './map.css'
 import { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 
   
 function Map(){
-    const [csvData, setCsvData] = useState([]);
+    const [malawi, setMalawi] = useState([]);
+    const [zambia, setZambia] = useState([]);
 
   useEffect(() => {
-    Papa.parse('https://raw.githubusercontent.com/CarlosNasayo/AppAfrica/main/src/data/malawi.csv', {
+    Papa.parse('https://raw.githubusercontent.com/CarlosNasayo/AppAfrica/main/src/data/malawii.csv', {
       download: true,
       header: true,
       complete: function(results) {
-        setCsvData(results.data);
+        setMalawi(results.data);
       }
     });
   }, []);
-console.log(csvData)
+ /*  useEffect(() => {
+    Papa.parse('https://raw.githubusercontent.com/CarlosNasayo/AppAfrica/main/src/data/malawii.csv', {
+      download: true,
+      header: true,
+      complete: function(results) {
+        setMalawi(results.data);
+      }
+    });
+  }, []); */
+console.log(malawi)
 
     return (
       <MapContainer
@@ -36,8 +46,16 @@ console.log(csvData)
         }}
         zoomControl={false}
       >
-        {csvData.map((dat,index) => (
-          <Marker key={index} position={[dat.latitude,dat.longitude]} />
+        {malawi.map((dat,index) => (
+          <Marker position={[dat.latitude,dat.longitude]}>
+            <Tooltip direction="top" offset={[0, -30]}>
+                          Name: {dat.name} <br />
+                          Ohers: {dat.others}<br />
+                          
+                          <br />
+                         
+                        </Tooltip>
+          </Marker>
         ))}
         <Marker position={[-16.0308, 35.5059]} />
         <LayersControl position="topright" className="mt-5">
