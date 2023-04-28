@@ -8,25 +8,23 @@ function Map(){
     const [csvData, setCsvData] = useState([]);
 
   useEffect(() => {
-    Papa.parse('D:\OneDrive - CGIAR\Documents\malawi', {
+    Papa.parse('https://raw.githubusercontent.com/CarlosNasayo/AppAfrica/main/src/data/malawi.csv', {
       download: true,
       header: true,
       complete: function(results) {
         setCsvData(results.data);
-        console.log(results.data);
       }
     });
   }, []);
-
-    return( 
-        <MapContainer
-        
+console.log(csvData)
+    return (
+      <MapContainer
         id="mapid"
         center={[14.88, -35, 76]}
         zoom={3}
         zoomSnap={0.25}
         maxBounds={[
-          [-13.47, 29.30],
+          [-13.47, 29.3],
           [-0.97, 40.56],
         ]}
         scrollWheelZoom={true}
@@ -37,13 +35,13 @@ function Map(){
         }}
         zoomControl={false}
       >
-        <Marker position={[-16.0308, 35.5059]}/>
+        {csvData.map((dat) => (
+          <Marker key={dat.name} position={[dat.latitude, dat.longitude]} />
+        ))}
+        <Marker position={[-16.0308, 35.5059]} />
         <LayersControl position="topright" className="mt-5">
           <LayersControl.BaseLayer checked name="Normal">
-          <TileLayer
-   
-    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-  />
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
           </LayersControl.BaseLayer>
           <LayersControl.BaseLayer name="Relief">
             <TileLayer url="https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png" />
@@ -51,7 +49,6 @@ function Map(){
           <LayersControl.BaseLayer name="Satellite">
             <TileLayer url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}" />
           </LayersControl.BaseLayer>
-         
 
           {/*  <LayersControl.Overlay name="Aceesions" 
           >
@@ -76,7 +73,6 @@ function Map(){
         //{" "}
         {/* <ImageOverlay zIndex={1000} url={imageUrl} bounds={imageBounds} /> */}
       </MapContainer>
-        
-    )
+    );
 }
 export default Map
