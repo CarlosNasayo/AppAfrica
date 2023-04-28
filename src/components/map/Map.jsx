@@ -17,6 +17,7 @@ function Map(){
     });
   }, []);
 console.log(csvData)
+
     return (
       <MapContainer
         id="mapid"
@@ -36,7 +37,7 @@ console.log(csvData)
         zoomControl={false}
       >
         {csvData.map((dat) => (
-          <Marker key={dat.name} position={[dat.latitude, dat.longitude]} />
+          <Marker key={dat.name} position={[dat.latitude,dat.longitude]} />
         ))}
         <Marker position={[-16.0308, 35.5059]} />
         <LayersControl position="topright" className="mt-5">
